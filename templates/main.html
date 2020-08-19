@@ -1,0 +1,61 @@
+<html>
+
+<head>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <title>Test</title>
+</head>
+
+<body onmouseup="mouseUp()">
+
+  <!-- Instruction button modal -->
+  <button id="btnInstruction" onmousedown="mouseDown()" type="button" class="btn btn-sm pull-right"
+    data-target="#instrucciones" style="z-index: 99999;">
+    Abrir instrucciones...
+  </button>
+
+  <!-- Camera -->
+  <div class="text-center">
+    <div class="container">
+      <h1>IA de la Verdad</h1>
+      <h4>Posicione su rostro dentro del rango de la cámara</h4>
+      <img height="50%" id="bg" src="{{ url_for('video_feed') }}">
+      <div class="row my-2">
+        <button type="button" class="btn btn-danger mx-auto">Iniciar</button>
+      </div>
+      <h4 id="res"></h4>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="instrucciones" tabindex="-1" role="dialog" aria-labelledby=instruccionesModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="instruccionesModalLongTitle">Instrucciones</h5>
+        </div>
+        <div class="modal-body">
+          <h6>1. El usuario debe encontrarse a una distancia de entre 50cm a 150cm.</h6>
+          <h6>2. El usuario no debería utilizar ningún accesorio que cubra su rostro (lentes, bandanas, máscaras).</h6>
+          <h6>3. El usuario debe minimizar el movimiento de su cabeza.</h6>
+          <h6>4. Si en algún momento, no se logra capturar correctamente el rostro, el indicador de abajo indicara si
+            funciona o no.</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/face_available.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/press_instructions.js') }}"></script>>
+  </script>
+</body>
+
+</html>

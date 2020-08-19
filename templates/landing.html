@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Test</title>
+  </head>
+  <body>
+    <!-- Main -->
+    <div class="text-center">  
+        <h3 id="main-text">¿Habilitas el acceso a tu cámara?</h3>
+        <button type="button" onclick="document.location='/main'" class="btn btn-primary">Sí, doy permiso</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noCamera">No doy permiso</button>  
+    </div>
+     <!-- Modal -->
+    <div class="modal fade" id="noCamera" tabindex="-1" role="dialog" aria-labelledby=noCameraModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">              
+            </div>
+            <div class="modal-body">
+              <h6>Debes darle permiso a la aplicación para usar tu cámara.</h6>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script type="text/javascript" src="{{ url_for('static', filename = 'js/cam_available.js') }}"></script>
+  </body>
+</html>

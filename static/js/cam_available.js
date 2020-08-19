@@ -1,15 +1,17 @@
 setInterval(function(){
     $.ajax({
       type: 'GET',
-      url: '/test',
+      url: '/has_cam',
       dataType: 'json',
       success: function(data){
-          //console.log(data)
-          if(!data.available){
-            $('#res').html("Por favor, muestra tu rosto!");  
+          console.log(data)
+          if(data.available){
+            $("#main-text").html("¿Habilitas el acceso a tu cámara?"); 
+            $(".btn").removeClass("invisible")
           }else{
-            $('#res').html("Todo bien"); 
-          }    
+            $("#main-text").html("Por favor, conecta tu cámara!"); 
+            $(".btn").addClass("invisible")
+          }            
         }
       });
-    }, 500);
+    }, 3000);

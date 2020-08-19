@@ -11,8 +11,8 @@ predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 class VideoCamera:
     def __init__(self):
        #capturing video
-        self.cap = cv2.VideoCapture(0)
-
+        self.cap = getCam()
+        #stackoverflowsaso con cap cuando es nulo
         self.prediction_points = []
     
     def __del__(self):
@@ -73,6 +73,14 @@ class VideoCamera:
 
 def returnArea(x1,x2,y1,y2):
     return (x2-x1) * (y2-y1)
+
+def getCam():
+    cap = cv2.VideoCapture(0)
+    if cap is None or not cap.isOpened():
+        print('Warning: unable to open video source')
+        return 0
+    else:
+        return cap
 
 '''
 #Timer variables
