@@ -1,9 +1,8 @@
 from flask import Flask, render_template, Response, jsonify
-from camera import VideoCamera, getCam;
 
 app = Flask(__name__)
 
-app.camera
+import webApp.camera
 
 cam_available = 0
 
