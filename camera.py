@@ -5,6 +5,8 @@ import pandas as pd #pandas 1.0.3
 import time
 import datetime #pip install dateTime 4.3
 
+from webApp import app
+
 sp = "var/www/webApp/webApp/shape_predictor_68_face_landmarks.dat"
 
 detector = dlib.get_frontal_face_detector()
