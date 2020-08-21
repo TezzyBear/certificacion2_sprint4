@@ -6,14 +6,7 @@ import time
 import datetime #pip install dateTime 4.3
 
 detector = dlib.get_frontal_face_detector()
-
-try:
-    predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
-except Exception, e:
-    returnValue = 'error' + str(e)
-
-print(returnValue)
-return returnValue
+predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
 class VideoCamera:
     def __init__(self):
