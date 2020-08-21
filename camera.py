@@ -5,9 +5,11 @@ import pandas as pd #pandas 1.0.3
 import time
 import datetime #pip install dateTime 4.3
 
-from webApp import app
+#from webApp import app  --- PARA SERVER
 
-sp = "var/www/webApp/webApp/shape_predictor_68_face_landmarks.dat"
+#sp = "var/www/webApp/webApp/shape_predictor_68_face_landmarks.dat" --- PARA SERVER
+
+sp = "shape_predictor_68_face_landmarks.dat"
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(sp)
