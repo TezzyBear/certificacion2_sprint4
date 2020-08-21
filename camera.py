@@ -5,10 +5,15 @@ import pandas as pd #pandas 1.0.3
 import time
 import datetime #pip install dateTime 4.3
 
-import webApp.shape_predictor_68_face_landmarks
-
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+
+try:
+    predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+except Exception, e:
+    returnValue = 'error' + str(e)
+
+print(returnValue)
+return returnValue
 
 class VideoCamera:
     def __init__(self):
