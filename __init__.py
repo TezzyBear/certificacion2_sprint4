@@ -1,15 +1,16 @@
 from flask import Flask, render_template, Response, jsonify
-from camera import VideoCamera
-from camera import getCam
+from camera import VideoCamera, getCam;
 
 app = Flask(__name__)
+
+app.camera
 
 cam_available = 0
 
 @app.route('/', methods=['GET'])
 def index():
     if(getCam() == 0):
-        print("NO HAY CAMARA CHECA ESO!")
+        print("No hay camara conectada!")
     # rendering webpage
     return render_template('landing.html')
 @app.route('/main', methods=['GET'])
