@@ -7,7 +7,7 @@ import datetime #pip install dateTime 4.3
 
 print("GAAAAAA")
 
-sp = "shape_predictor_68_face_landmarks.data"
+sp = "var/www/webApp/webApp/shape_predictor_68_face_landmarks.dat"
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(sp)
