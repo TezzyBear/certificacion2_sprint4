@@ -15,6 +15,31 @@
   <title>Test</title>
 </head>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('button#on').bind('click', function() {
+            $(this).toggleClass('btn-danger btn-secondary');
+            var text=$('button#on').text();
+            if(text === "Start"){
+              $(this).html('Stop');
+              $.getJSON('/startRecording',
+                function(data) {
+              //do nothing
+            });
+            } else{
+              $(this).text('Start');
+              $.getJSON('/stopRecording',
+                function(data) {
+                  window.location.replace("http://localhost:5001/details")
+              //go to details view
+            });
+            }
+            return false;
+          });
+        });
+</script>
+
 <body onmouseup="mouseUp()">
 
   <!-- Instruction button modal -->
@@ -30,7 +55,7 @@
       <h4>Posicione su rostro dentro del rango de la cámara</h4>
       <img height="50%" id="bg" src="{{ url_for('video_feed') }}">
       <div class="row my-2">
-        <button type="button" class="btn btn-danger mx-auto">Hola</button>
+        <button type="button" class="btn btn-danger mx-auto" id=on>Start</button>
       </div>
       <h4 id="res"></h4>
     </div>

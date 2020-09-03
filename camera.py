@@ -14,18 +14,24 @@ sp = "shape_predictor_68_face_landmarks.dat"
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(sp)
 
+cameraOn = False
+numpyArray = np.array([])
+
 class VideoCamera:
+
     def __init__(self):
-       #capturing video
+        #capturing video
         self.cap = getCam()
         #stackoverflowsaso con cap cuando es nulo
         self.prediction_points = []
-    
+        #array for data frame
+        
     def __del__(self):
         #releasing camera
         self.cap.release()
-    def get_frame(self):    
 
+    def get_frame(self):
+        global numpyArray    
         _, frame = self.cap.read()
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)    
         faces = detector(gray)
@@ -64,9 +70,24 @@ class VideoCamera:
             landmarks = predictor(gray, actual_face)
             face_points = []
 
+            fila = []
+
             for i in range(0, 68):       
                 cv2.circle(frame, (landmarks.part(i).x,landmarks.part(i).y), 4, (255, 0, 0), -1)
                 face_points.append((landmarks.part(i).x,landmarks.part(i).y))
+                xToAppend = landmarks.part(i).x
+                yToAppend = landmarks.part(i).y
+
+                fila.append(xToAppend)
+                fila.append(yToAppend)
+            
+            global cameraOn
+            if cameraOn:
+                if len(numpyArray) == 0:
+                    numpyArray = np.array([fila])
+                else:
+                    numpyArray = np.vstack((numpyArray, fila))
+
             self.prediction_points.append(face_points)
 
         # encode OpenCV raw frame to jpg and displaying it
@@ -87,6 +108,21 @@ def getCam():
         return 0
     else:
         return cap
+
+def start_Recoding():
+    global numpyArray 
+    numpyArray = np.array([])
+    global cameraOn
+    cameraOn = True
+
+def stop_Recording():
+    global cameraOn
+    cameraOn = False
+    global numpyArray   
+
+def get_numpyArray():
+    global numpyArray
+    return numpyArray    
 
 '''
 #Timer variables

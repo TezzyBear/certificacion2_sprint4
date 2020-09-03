@@ -1,6 +1,7 @@
-from flask import Flask, render_template, Response, jsonify
-from camera import VideoCamera, getCam;
-
+from flask import Flask, render_template, redirect, url_for, Response, jsonify
+from camera import VideoCamera, getCam, start_Recoding, stop_Recording, get_numpyArray
+from prediction import get_prediction, getMeassurements
+import numpy as np
 app = Flask(__name__)
 
 #import webApp.camera  --- PARA SERVER
@@ -13,14 +14,17 @@ def index():
         print("No hay camara conectada!")
     # rendering webpage
     return render_template('landing.html')
+
 @app.route('/main', methods=['GET'])
 def main():
     # rendering webpage
     return render_template('main.html', cam_available = cam_available)
+    
 def gen(camera):
     while True:        
         #get camera frame
         frame, got_landmarks = camera.get_frame()
+
         global cam_available
         cam_available = got_landmarks
         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
@@ -42,6 +46,24 @@ def has_cam():
          response = {"available":0}
     return jsonify(response)
 
+@app.route('/stopRecording', methods=['GET'])
+def stopRecording():
+    print("Stopped")
+    get_prediction(get_numpyArray(), 10)
+    stop_Recording()
+    return jsonify({"hola":1})
+
+@app.route('/startRecording', methods=['GET'])
+def startRecording():
+    print("Started")
+    start_Recoding()
+    return ("nothing")
+
+@app.route('/details', methods = ['GET'])
+def details():
+    return render_template('details.html', meassurements = getMeassurements())
+
 if __name__ == '__main__':
     # defining server ip address and port    
-    app.run(port='5000', debug=True)
+    app.run(port='5001', debug=True)
+

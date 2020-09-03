@@ -1,6 +1,6 @@
 function mouseUp() {    
-    $('#instrucciones').modal('hide')
+    $('#instrucciones').hide();
   }
   function mouseDown() {
-    $('#instrucciones').modal('show')
+    $('#instrucciones').show();
   }
