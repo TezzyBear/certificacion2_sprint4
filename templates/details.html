@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Test</title>
 </head>
-<body>
+<body  style="background-image: url({{ url_for('static', filename='images/bg.jpg') }})">
 
 <h1 class="text-center"> {{ meassurements.prediccion }} </h1>
 
@@ -17,17 +17,17 @@
 <table class="table table-responsive table-bordered text-center" style="table-layout:fixed;">
     <thead>
     <tr>
-        <th class = "text-center" colspan="2">Parameters</th>
+        <th class = "text-center" colspan="2" style="color: white">Parameters</th>
     </tr>
     </thead>
     <tbody>
      <tr>
-        <td>Metrica 1</td>
-        <td> {{ meassurements.metrica_1 }}</td>
+        <td style="color: white">Metrica 1</td>
+        <td style="color: white"> {{ meassurements.metrica_1 }}</td>
     </tr>
     <tr>
-        <td>Metrica 2</td>
-        <td>{{ meassurements.metrica_2 }}</td>
+        <td style="color: white">Metrica 2</td>
+        <td style="color: white">{{ meassurements.metrica_2 }}</td>
     </tbody>
 </table>
 </div>
@@ -35,7 +35,7 @@
 
 <body>
     <div class="text-center">
-        <button type="button" onclick="document.location='/main'" class="btn btn-primary">Reintentar</button>
+        <button type="button" onclick="document.location='/main'" class="btn btn-primary mx-auto">Reintentar</button>
         <button type="button" onclick="document.location='/'" class="btn btn-primary">Salir</button>
     </div>
 </body>

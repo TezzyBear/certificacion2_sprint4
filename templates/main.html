@@ -19,7 +19,7 @@
 <script type=text/javascript>
         $(function() {
           $('button#on').bind('click', function() {
-            $(this).toggleClass('btn-danger btn-secondary');
+            $(this).toggleClass('btn-primary btn-info');
             var text=$('button#on').text();
             if(text === "Start"){
               $(this).html('Stop');
@@ -29,18 +29,39 @@
             });
             } else{
               $(this).text('Start');
+              $('div#loading').css("visibility", "visible");
+              $('#cargando').html("Cargando"); 
               $.getJSON('/stopRecording',
                 function(data) {
                   window.location.replace("http://localhost:5001/details")
               //go to details view
             });
             }
+            $('button#on2').html('To Try');
             return false;
           });
         });
 </script>
 
-<body onmouseup="mouseUp()">
+<style>
+  .loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+    visibility: hidden;
+    margin: 0 auto;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+<body onmouseup="mouseUp()" style="background-image: url({{ url_for('static', filename='images/bg.jpg') }})">
 
   <!-- Instruction button modal -->
   <button id="btnInstruction" onmousedown="mouseDown()" type="button" class="btn btn-sm pull-right"
@@ -51,15 +72,20 @@
   <!-- Camera -->
   <div class="text-center">
     <div class="container">
-      <h1>IA de la Verdad</h1>
-      <h4>Posicione su rostro dentro del rango de la cámara</h4>
+      <h1 style="color:white">IA de la Verdad</h1>
+      <h4 style="color:white">Posicione su rostro dentro del rango de la cámara</h4>
       <img height="50%" id="bg" src="{{ url_for('video_feed') }}">
       <div class="row my-2">
-        <button type="button" class="btn btn-danger mx-auto" id=on>Start</button>
+        <button type="button" class="btn btn-primary mx-auto" id=on>Start</button>
       </div>
-      <h4 id="res"></h4>
+      <h4 id="res" style="color:white"></h4>
+      <div class="loader" id=loading>
+      </div>
+      <h5 id="cargando" style="color:white"></h5>
     </div>
   </div>
+
+
   <!-- Modal -->
   <div class="modal fade" id="instrucciones" tabindex="-1" role="dialog" aria-labelledby=instruccionesModalLongTitle"
     aria-hidden="true">
@@ -80,7 +106,8 @@
   </div>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/face_available.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/press_instructions.js') }}"></script>>
-  </script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/start_function.js') }}"></script>
+</script>
 </body>
 
 </html>

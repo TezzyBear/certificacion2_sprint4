@@ -49,7 +49,7 @@ def has_cam():
 @app.route('/stopRecording', methods=['GET'])
 def stopRecording():
     print("Stopped")
-    get_prediction(get_numpyArray(), 10)
+    #get_prediction(get_numpyArray(), 10)
     stop_Recording()
     return jsonify({"hola":1})
 
@@ -58,6 +58,7 @@ def startRecording():
     print("Started")
     start_Recoding()
     return ("nothing")
+
 
 @app.route('/details', methods = ['GET'])
 def details():

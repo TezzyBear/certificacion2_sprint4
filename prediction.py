@@ -66,4 +66,6 @@ def get_prediction(numpyArray, sequenceSize):
 
 def getMeassurements():
     global meassurements
-    return meassurements
+    #return meassurements
+    arr = ["Ford", "Volvo", "BMW"]
+    return arr
