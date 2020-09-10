@@ -6,7 +6,7 @@ class Meassurements:
     def __init__(self, prediccion = None, metrica_1 = None, metrica_2 = None):
         self.prediccion = prediccion
         if(metrica_1 != None):
-            self.metrica_1 = round(metrica_1 * 100, 2)        
+          self.metrica_1 = round(metrica_1 * 100, 2)        
         if(metrica_2 != None):
           self.metrica_2 = round(metrica_2 * 100, 2)
          
@@ -66,6 +66,4 @@ def get_prediction(numpyArray, sequenceSize):
 
 def getMeassurements():
     global meassurements
-    #return meassurements
-    arr = ["Ford", "Volvo", "BMW"]
-    return arr
+    return meassurements

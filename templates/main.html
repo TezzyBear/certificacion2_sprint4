@@ -12,7 +12,7 @@
 
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <title>Test</title>
+  <title>Principal</title>
 </head>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -21,14 +21,14 @@
           $('button#on').bind('click', function() {
             $(this).toggleClass('btn-primary btn-info');
             var text=$('button#on').text();
-            if(text === "Start"){
-              $(this).html('Stop');
+            if(text === "Iniciar"){
+              $(this).html('Detener');
               $.getJSON('/startRecording',
                 function(data) {
               //do nothing
             });
             } else{
-              $(this).text('Start');
+              $(this).text('Iniciar');
               $('div#loading').css("visibility", "visible");
               $('#cargando').html("Cargando"); 
               $.getJSON('/stopRecording',
@@ -65,7 +65,7 @@
 
   <!-- Instruction button modal -->
   <button id="btnInstruction" onmousedown="mouseDown()" type="button" class="btn btn-sm pull-right"
-    data-target="#instrucciones" style="z-index: 99999;">
+    data-target="#instrucciones" style="z-index: 99999; color: white">
     Abrir instrucciones...
   </button>
 
@@ -76,7 +76,7 @@
       <h4 style="color:white">Posicione su rostro dentro del rango de la cámara</h4>
       <img height="50%" id="bg" src="{{ url_for('video_feed') }}">
       <div class="row my-2">
-        <button type="button" class="btn btn-primary mx-auto" id=on>Start</button>
+        <button type="button" class="btn btn-primary mx-auto" id=on>Iniciar</button>
       </div>
       <h4 id="res" style="color:white"></h4>
       <div class="loader" id=loading>
