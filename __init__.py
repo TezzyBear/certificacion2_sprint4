@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, Response, jsonify
 from camera import VideoCamera, getCam, start_Recoding, stop_Recording, get_numpyArray
-from prediction import get_prediction, getMeassurements
+from prediction import get_prediction, getMeassurements, Meassurements
 import numpy as np
 app = Flask(__name__)
 
