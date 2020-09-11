@@ -1,11 +1,4 @@
-function mouseUp() {    
-    $('#instrucciones').hide();
-  }
-  function mouseDown() {
-    $('#instrucciones').show();
-  }
-
-  $(function() {
+$(function() {
     $('button#on').bind('click', function() {
       $(this).toggleClass('btn-danger btn-secondary');
       var text=$('button#on').text();

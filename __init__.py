@@ -59,6 +59,7 @@ def startRecording():
     start_Recoding()
     return ("nothing")
 
+
 @app.route('/details', methods = ['GET'])
 def details():
     return render_template('details.html', meassurements = getMeassurements())

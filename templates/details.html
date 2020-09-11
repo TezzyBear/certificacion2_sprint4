@@ -7,37 +7,49 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>Test</title>
-</head>
-<body>
+    <title>Detalles</title>
 
-<h1 class="text-center"> {{ meassurements.prediccion }} </h1>
+    <script>
+        function verDetalles(){
+            $('#masDetalles').css('visibility', 'visible');
+        }
+    </script>
+
+</head>
+
+<body  style="background-image: url({{ url_for('static', filename='images/bg.jpg') }})">
+
+<h1 class="text-center" style="color: white"> {{ meassurements.prediccion }} </h1>
 
 <div class = "container">
 <table class="table table-responsive table-bordered text-center" style="table-layout:fixed;">
     <thead>
     <tr>
-        <th class = "text-center" colspan="2">Parameters</th>
+        <th class = "text-center" colspan="2" style="color: white">Métricas</th>
     </tr>
     </thead>
     <tbody>
      <tr>
-        <td>Metrica 1</td>
-        <td> {{ meassurements.metrica_1 }}</td>
+        <td style="color: white">Métrica 1</td>
+        <td style="color: white"> {{'%0.3f'| format(meassurements.metrica_1|float)}}%</td>
     </tr>
     <tr>
-        <td>Metrica 2</td>
-        <td>{{ meassurements.metrica_2 }}</td>
+        <td style="color: white">Métrica 2</td>
+        <td style="color: white">{{'%0.3f'| format(meassurements.metrica_2|float)}}%</td>
     </tbody>
 </table>
 </div>
-</body>
 
-<body>
-    <div class="text-center">
-        <button type="button" onclick="document.location='/main'" class="btn btn-primary">Reintentar</button>
-        <button type="button" onclick="document.location='/'" class="btn btn-primary">Salir</button>
-    </div>
+<div class = "container text-center">
+<a onclick="verDetalles()">Ver más detalles...</a>
+<div id="masDetalles" style="color: white; visibility: hidden; padding-bottom: 12px;">Grado de certeza de la predicción: {{'%0.3f'| format(((meassurements.metrica_1 + meassurements.metrica_2)/2)|float)}}%</div>
+</div>
+
+<div class="text-center">
+    <button type="button" onclick="document.location='/main'" class="btn btn-primary mx-auto">Intentar de Nuevo</button>
+    <button type="button" onclick="document.location='/'" class="btn btn-primary">Salir</button>
+</div>
+
 </body>
 
 </html>
