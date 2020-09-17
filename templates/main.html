@@ -15,7 +15,6 @@
   <title>Principal</title>
 </head>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type=text/javascript>
         $(function() {
           $('button#on').bind('click', function() {
@@ -45,8 +44,10 @@
 
 <style>
   .loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
+    border: 4px solid #f3f3f3;
+    /* Light grey */
+    border-top: 4px solid #3498db;
+    /* Blue */
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -56,16 +57,21 @@
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
   }
 </style>
 
 <body onmouseup="mouseUp()" style="background-image: url({{ url_for('static', filename='images/bg.jpg') }})">
 
   <!-- Instruction button modal -->
-  <button id="btnInstruction" onmousedown="mouseDown()" type="button" class="btn btn-sm pull-right"
-    data-target="#instrucciones" style="z-index: 99999; color: white">
+  <button id="btnInstruction" onmousedown="mouseDown()" type="button" class="btn btn-sm pull-right" data-toggle="modal"
+    data-target="#modalInstrucciones" style="z-index: 99999; color: white">
     Abrir instrucciones...
   </button>
 
@@ -85,14 +91,13 @@
     </div>
   </div>
 
-
   <!-- Modal -->
-  <div class="modal fade" id="instrucciones" tabindex="-1" role="dialog" aria-labelledby=instruccionesModalLongTitle"
-    aria-hidden="true">
+  <div class="modal fade" id="modalInstrucciones" tabindex="-1" role="dialog"
+    aria-labelledby="instruccionesModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title" id="instruccionesModalLongTitle">Instrucciones</h5>
+          <h3 class="modal-title" id="instruccionesModalLongTitle">Instrucciones</h3>
         </div>
         <div class="modal-body">
           <h6>1. El usuario debe encontrarse a una distancia de entre 50cm a 150cm.</h6>
@@ -107,7 +112,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/face_available.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/press_instructions.js') }}"></script>>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/start_function.js') }}"></script>
-</script>
+  </script>
 </body>
 
 </html>
