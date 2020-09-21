@@ -21,12 +21,37 @@
             $(this).toggleClass('btn-primary btn-info');
             var text=$('button#on').text();
             if(text === "Iniciar"){
+              $("#on").html('Esperar');
+              var counter = 3;
+              id = document.getElementById("count_num");
+			  id.innerHTML = counter;
+
+		      setInterval( function(){
+			    counter--;
+			    if( counter >= 0 ){
+				  id.innerHTML = counter;
+			    }
+			    if(counter === 0 ){
+				  id.innerHTML = "La grabación se ha iniciado";
+				  //AQUI SE EMPIEZA A GRABAR
+                  console.log("Entra");
+				  $("#on").html('Detener');
+                  $.getJSON('/startRecording',
+                  function(data) {
+                    //do nothing
+                });
+			    }
+		      }, 1000);
+
+              /*
               $(this).html('Detener');
               $.getJSON('/startRecording',
                 function(data) {
               //do nothing
             });
-            } else{
+            */
+
+            } else if(text === "Detener"){
               $(this).text('Iniciar');
               $('div#loading').css("visibility", "visible");
               $('#cargando').html("Cargando"); 
@@ -81,6 +106,9 @@
       <h1 style="color:white">IA de la Verdad</h1>
       <h4 style="color:white">Posicione su rostro dentro del rango de la cámara</h4>
       <img height="50%" id="bg" src="{{ url_for('video_feed') }}">
+
+      <h2 style="color:white" id="count_num"></h2>
+
       <div class="row my-2">
         <button type="button" class="btn btn-primary mx-auto" id=on>Iniciar</button>
       </div>
