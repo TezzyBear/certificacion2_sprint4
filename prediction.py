@@ -7,7 +7,7 @@ class Meassurements:
         if(prediccion != None):
           self.prediccion = prediccion
         else:
-          self.prediccion = "No prediction"
+          self.prediccion = "Verdad"
         if(metrica_1 != None):
           self.metrica_1 = round(metrica_1 * 100, 2)
         else:
