@@ -22,25 +22,30 @@
       if (mas_text == "Ver más detalles...") {
         $('#btn_mas').text("Ver menos detalles...");
 
+      } else {
+        $('#btn_mas').text("Ver más detalles...");
+      }
+    }
+    function audio_response() {
         var res = $("#prediction").text();
-        console.log(res);
         if (res == "Verdad") {
-          console.log("Verdad");
-          let audio_verdad = new Audio("{{ url_for('static', filename='audio/verdad.mp3') }}");
-          let audio_verdura = new Audio("{{ url_for('static', filename='audio/verdura.mp3') }}");
+          rnd = Math.floor(Math.random() * 3);
+          console.log(rnd);
+          let audio_verdad;
+          if(rnd == 0){
+            audio_verdad = new Audio("{{ url_for('static', filename='audio/verdura.mp3') }}");
+          }else{
+            audio_verdad = new Audio("{{ url_for('static', filename='audio/verdad.mp3') }}");
+          }
+          
           audio_verdad.play();
         } else if (res == "Mentira") {
           let audio_mentira = new Audio("{{ url_for('static', filename='audio/mentira.mp3') }}");
           audio_mentira.play();
         }
-
-      } else {
-        $('#btn_mas').text("Ver más detalles...");
-      }
     }
 
     $("#btn_mas").on("click", function(){
-      console.log("boton mas");
       verDetalles();
     });
 
@@ -86,11 +91,12 @@
           function (data) {
             $('div#loading').hide();
             $('#cargando').hide();
-            console.log(data);
+            $("#count_num").text("");
             $("#prediction").text(data["prediccion"]);
             $("#metric_1").text(data["metrica_1"]);
             $("#metric_2").text(data["metrica_2"]);
             $("#mdl_details").modal("show");
+            audio_response();
             //window.location.replace("http://localhost:5001/details")
             //go to details view
           });
@@ -173,15 +179,10 @@
   </div>
 
   <div class="modal fade" id="mdl_details" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-              aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Modal title</h4>
-        </div>
         <div class="modal-body">
-          <h1 id="prediction" class="text-center" ></h1>
+          <h1 id="prediction" class="text-center" style="font-size: 48px; font-weight:bold;"></h1>
           <div class="text-center">
             <a id="btn_mas" style="cursor: pointer;">Ver más detalles...</a>
 
@@ -204,7 +205,8 @@
             </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">Intentar de Nuevo</button>
+          <button type="button" class="btn btn-default btn-primary" onclick="document.location='/'" >Salir</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

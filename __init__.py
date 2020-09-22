@@ -50,7 +50,7 @@ def has_cam():
 @app.route('/stopRecording', methods=['GET'])
 def stopRecording():
     print("Stopped")
-    ## get_prediction(get_numpyArray(), 10)
+    get_prediction(get_numpyArray(), 10)
     stop_Recording()
     return json.dumps(getMeassurements().__dict__)
 
