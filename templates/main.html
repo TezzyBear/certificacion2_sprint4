@@ -2,69 +2,103 @@
 
 <head>
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <!-- Popper JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
   <!-- Latest compiled JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <title>Principal</title>
 </head>
 
-<script type=text/javascript>
-        $(function() {
-          $('button#on').bind('click', function() {
-            $(this).toggleClass('btn-primary btn-info');
-            var text=$('button#on').text();
-            if(text === "Iniciar"){
-              $("#on").html('Esperar');
-              var counter = 3;
-              id = document.getElementById("count_num");
-			  id.innerHTML = counter;
+<script type="text/javascript">
 
-		      setInterval( function(){
-			    counter--;
-			    if( counter >= 0 ){
-				  id.innerHTML = counter;
-			    }
-			    if(counter === 0 ){
-				  id.innerHTML = "La grabación se ha iniciado";
-				  //AQUI SE EMPIEZA A GRABAR
-                  console.log("Entra");
-				  $("#on").html('Detener');
-                  $.getJSON('/startRecording',
-                  function(data) {
-                    //do nothing
-                });
-			    }
-		      }, 1000);
+  $(function () {
 
-              /*
-              $(this).html('Detener');
-              $.getJSON('/startRecording',
-                function(data) {
-              //do nothing
-            });
-            */
+    $('#table_metricas').hide();
 
-            } else if(text === "Detener"){
-              $(this).text('Iniciar');
-              $('div#loading').css("visibility", "visible");
-              $('#cargando').html("Cargando"); 
-              $.getJSON('/stopRecording',
-                function(data) {
-                  window.location.replace("http://localhost:5001/details")
-              //go to details view
-            });
-            }
-            $('button#on2').html('To Try');
-            return false;
+    function verDetalles() {
+      $('#table_metricas').toggle();
+      let mas_text = $('#btn_mas').text()
+      if (mas_text == "Ver más detalles...") {
+        $('#btn_mas').text("Ver menos detalles...");
+
+        var res = $("#prediction").text();
+        console.log(res);
+        if (res == "Verdad") {
+          console.log("Verdad");
+          let audio_verdad = new Audio("{{ url_for('static', filename='audio/verdad.mp3') }}");
+          let audio_verdura = new Audio("{{ url_for('static', filename='audio/verdura.mp3') }}");
+          audio_verdad.play();
+        } else if (res == "Mentira") {
+          let audio_mentira = new Audio("{{ url_for('static', filename='audio/mentira.mp3') }}");
+          audio_mentira.play();
+        }
+
+      } else {
+        $('#btn_mas').text("Ver más detalles...");
+      }
+    }
+
+    $("#btn_mas").on("click", function(){
+      console.log("boton mas");
+      verDetalles();
+    });
+
+    $('button#on').bind('click', function () {
+      $(this).toggleClass('btn-primary btn-info');
+      var text = $('button#on').text();
+      if (text === "Iniciar") {
+        $("#on").html('Esperar');
+        var counter = 3;
+        id = document.getElementById("count_num");
+        id.innerHTML = counter;
+
+        setInterval(function () {
+          counter--;
+          if (counter >= 0) {
+            id.innerHTML = counter;
+          }
+          if (counter === 0) {
+            id.innerHTML = "La grabación se ha iniciado";
+            //AQUI SE EMPIEZA A GRABAR
+            console.log("Entra");
+            $("#on").html('Detener');
+            $.getJSON('/startRecording',
+              function (data) {
+                //do nothing
+              });
+          }
+        }, 1000);
+
+        /*
+        $(this).html('Detener');
+        $.getJSON('/startRecording',
+          function(data) {
+        //do nothing
+      });
+      */
+
+      } else if (text === "Detener") {
+        $(this).text('Iniciar');
+        $('div#loading').css("visibility", "visible");
+        $('#cargando').html("Cargando");
+        $.getJSON('/stopRecording',
+          function (data) {
+            $('div#loading').hide();
+            $('#cargando').hide();
+            console.log(data);
+            $("#prediction").text(data["prediccion"]);
+            $("#metric_1").text(data["metrica_1"]);
+            $("#metric_2").text(data["metrica_2"]);
+            $("#mdl_details").modal("show");
+            //window.location.replace("http://localhost:5001/details")
+            //go to details view
           });
-        });
+      }
+      $('button#on2').html('To Try');
+      return false;
+    });
+  });
 </script>
 
 <style>
@@ -95,8 +129,8 @@
 <body onmouseup="mouseUp()" style="background-image: url({{ url_for('static', filename='images/bg.jpg') }})">
 
   <!-- Instruction button modal -->
-  <button id="btnInstruction" onmousedown="mouseDown()" type="button" class="btn btn-sm pull-right" data-toggle="modal"
-    data-target="#modalInstrucciones" style="z-index: 99999; color: white">
+  <button id="btnInstruction" onmousedown="mouseDown()" type="button" class="btn btn-sm pull-right btn-primary"
+    data-toggle="modal" data-target="#modalInstrucciones" style="z-index: 99999;">
     Abrir instrucciones...
   </button>
 
@@ -137,6 +171,45 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="mdl_details" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <h1 id="prediction" class="text-center" ></h1>
+          <div class="text-center">
+            <a id="btn_mas" style="cursor: pointer;">Ver más detalles...</a>
+
+          </div>
+            <table id="table_metricas" class="table table-responsive table-bordered text-center">
+              <thead>
+                <tr>
+                  <th class="text-center" colspan="2" >Métricas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >Métrica 1</td>
+                  <td id="metric_1" ></td>
+                </tr>
+                <tr>
+                  <td >Métrica 2</td>
+                  <td id="metric_2" ></td>
+              </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/face_available.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/press_instructions.js') }}"></script>>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/start_function.js') }}"></script>

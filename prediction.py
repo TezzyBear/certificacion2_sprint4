@@ -73,4 +73,5 @@ def get_prediction(numpyArray, sequenceSize):
 
 def getMeassurements():
     global meassurements
+    meassurements = Meassurements("Verdad",1,1)
     return meassurements

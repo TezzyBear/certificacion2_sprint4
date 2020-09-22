@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, Response, jsonify
 from camera import VideoCamera, getCam, start_Recoding, stop_Recording, get_numpyArray
 from prediction import get_prediction, getMeassurements, Meassurements
 import numpy as np
+import json
 app = Flask(__name__)
 
 #import webApp.camera  --- PARA SERVER
@@ -49,9 +50,9 @@ def has_cam():
 @app.route('/stopRecording', methods=['GET'])
 def stopRecording():
     print("Stopped")
-    get_prediction(get_numpyArray(), 10)
+    ## get_prediction(get_numpyArray(), 10)
     stop_Recording()
-    return jsonify({"hola":1})
+    return json.dumps(getMeassurements().__dict__)
 
 @app.route('/startRecording', methods=['GET'])
 def startRecording():

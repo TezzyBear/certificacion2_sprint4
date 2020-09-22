@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -10,45 +11,98 @@
     <title>Detalles</title>
 
     <script>
-        function verDetalles(){
-            $('#masDetalles').css('visibility', 'visible');
+        function verDetalles() {
+            $('#table_metricas').parent().toggle();
+            let mas_text = $('#btn_mas').text()
+            if(mas_text == "Ver más detalles..."){
+                $('#btn_mas').text("Ver menos detalles...");
+
+                var res = $("#result").text();
+                if(res == "Verdad"){
+                    console.log("Verdad");
+                    let audio_verdad = new Audio("{{ url_for('static', filename='audio/verdad.mp3') }}");
+                    let audio_verdura = new Audio("{{ url_for('static', filename='audio/verdura.mp3') }}");
+                    audio_verdad.play();
+                }else if(res == "Mentira"){
+                    let audio_mentira = new Audio("{{ url_for('static', filename='audio/mentira.mp3') }}");
+                    audio_mentira.play();
+                }
+
+            }else {
+                $('#btn_mas').text("Ver más detalles...");
+            }
         }
+        $(window).on("load",function(){
+            $('#table_metricas').parent().hide();
+
+            
+            
+        });
+        
     </script>
 
 </head>
 
-<body  style="background-image: url({{ url_for('static', filename='images/bg.jpg') }})">
+<body style="background-image: url({{ url_for('static', filename='images/bg.jpg') }})">
 
-<h1 class="text-center" style="color: white"> {{ meassurements.prediccion }} </h1>
+    <h1 id="result" class="text-center" style="color: white">{{ meassurements.prediccion }}</h1>
 
-<div class = "container">
-<table class="table table-responsive table-bordered text-center" style="table-layout:fixed;">
-    <thead>
-    <tr>
-        <th class = "text-center" colspan="2" style="color: white">Métricas</th>
-    </tr>
-    </thead>
-    <tbody>
-     <tr>
-        <td style="color: white">Métrica 1</td>
-        <td style="color: white"> {{'%0.3f'| format(meassurements.metrica_1|float)}}%</td>
-    </tr>
-    <tr>
-        <td style="color: white">Métrica 2</td>
-        <td style="color: white">{{'%0.3f'| format(meassurements.metrica_2|float)}}%</td>
-    </tbody>
-</table>
-</div>
+    <div class="container text-center">
+        <a id="btn_mas" onclick="verDetalles()" style="cursor: pointer;">Ver más detalles...</a>
+        <!--
+            <div id="masDetalles" style="color: white; visibility: hidden; padding-bottom: 12px;">Grado de certeza de la
+            predicción: {{'%0.3f'| format(((meassurements.metrica_1 + meassurements.metrica_2)/2)|float)}}%</div>
+        -->
+        
+    </div>
 
-<div class = "container text-center">
-<a onclick="verDetalles()">Ver más detalles...</a>
-<div id="masDetalles" style="color: white; visibility: hidden; padding-bottom: 12px;">Grado de certeza de la predicción: {{'%0.3f'| format(((meassurements.metrica_1 + meassurements.metrica_2)/2)|float)}}%</div>
-</div>
+    <br>
 
-<div class="text-center">
-    <button type="button" onclick="document.location='/main'" class="btn btn-primary mx-auto">Intentar de Nuevo</button>
-    <button type="button" onclick="document.location='/'" class="btn btn-primary">Salir</button>
-</div>
+    
+
+    <audio id="verdad" src="{{ url_for('static', filename='audio/verdad.mp3') }}" type="audio/mp3" autoplay>
+        <p>Alas, your browser doesn't support html5 audio.</p>
+    </audio>
+    <!--
+    <audio id="mentira" src="{{ url_for('static', filename='audio/mentira.mp3') }}" type="audio/mp3" muted>
+        <p>Alas, your browser doesn't support html5 audio.</p>
+    </audio>
+    <audio id="verdura" src="{{ url_for('static', filename='audio/verdura.mp3') }}" type="audio/mp3" muted>
+        <p>Alas, your browser doesn't support html5 audio.</p>
+    </audio>
+
+    -->
+
+    
+
+    <br>
+
+    <div class="container">
+        <table id="table_metricas" class="table table-responsive table-bordered text-center" style="table-layout:fixed;">
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="2" style="color: white">Métricas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="color: white">Métrica 1</td>
+                    <td style="color: white"> {{'%0.3f'| format(meassurements.metrica_1|float)}}%</td>
+                </tr>
+                <tr>
+                    <td style="color: white">Métrica 2</td>
+                    <td style="color: white">{{'%0.3f'| format(meassurements.metrica_2|float)}}%</td>
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+
+    <div class="text-center">
+        <button type="button" onclick="document.location='/main'" class="btn btn-primary mx-auto">Intentar de
+            Nuevo</button>
+        <button type="button" onclick="document.location='/'" class="btn btn-primary">Salir</button>
+    </div>
 
 </body>
 
